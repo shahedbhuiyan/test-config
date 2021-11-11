@@ -17,8 +17,6 @@ logging:
     path: logs
 
 spring:
-  profiles:
-    active: #spring.profiles.active#
   application:
     name: common-service
   lifecycle:

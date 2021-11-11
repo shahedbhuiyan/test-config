@@ -1,0 +1,82 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          default:
+            client-secret: ${CC_CUSTOMER}
+  sql:
+    init:
+      enabled: true
+      data-locations: classpath*:/seed/init-*.sql
+abbl:
+  cbs:
+    credential:
+      clientAppId: BS23IBAPP
+      system: ABBDTSTEQ
+      unit: DEV
+      user: IBNWUSR
+      password: ibnwusr
+    api:
+      connect:
+        uri: http://192.168.19.166:9087/abeqws/services/EQConnect
+        package: com.abbl.abeqws.connect
+      enquiry:
+        uri: http://192.168.19.166:9087/abeqws/services/EQEnquiry
+        package: com.abbl.abeqws.enquiry
+      trans:
+        uri: http://192.168.19.166:9087/abeqws/services/EQTransaction
+        package: com.abbl.abeqws.trans
+      sdn:
+        uri: http://192.168.19.23:8080/AB_BANK/services/CallSdn
+        package: biz.infrasofttech.aml
+ec:
+  api:
+    login: http://192.168.110.83:8280/ecapi/service/rest/t1/auth/login
+    search: http://192.168.110.83:8280/ecapi/service/rest/t1/nid/search
+    logout: http://192.168.110.83:8280/ecapi/service/rest/t1/auth/logout
+    fingerprint:
+      login: http://192.168.110.83:8280/ecapi/service/rest/t2/auth/login
+      search: http://192.168.110.83:8280/ecapi/service/rest/t2/nid/search
+      logout: http://192.168.110.83:8280/ecapi/service/rest/t2/auth/logout
+server:
+  tomcat:
+    max-swallow-size: 20MB
+ekyc:
+  ml:
+    url: http://34.71.189.167:5001 #https://ekyc.ml:5000
+logging:
+  level:
+    org:
+      zalando:
+        logbook: TRACE
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+sftp:
+  host: ${SFTP_HOST}
+  port: ${SFTP_PORT}
+  username: ${SFTP_USERNAME}
+  password: ${SFTP_PASSWORD}
+  sessionTimeout: 15000
+  channelTimeout: 15000
+  workingDirectory: /home/user/sftp/
+---
+spring:
+  config:
+    activate:
+      on-profile: stage
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+
+---

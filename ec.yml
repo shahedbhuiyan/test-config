@@ -1,0 +1,18 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          default:
+            client-secret: ${CC_EC}
+ec:
+  api:
+    nid:
+      login: https://192.168.19.71:9443/ecws/service/t1/auth/login
+      search: https://192.168.19.71:9443/ecws/service/t1/nid/search
+      logout: https://192.168.19.71:9443/ecws/service/t1/auth/logout
+    fingerprint:
+      login: https://192.168.19.71:9443/ecws/service/t2/auth/login
+      search: https://192.168.19.71:9443/ecws/service/t2/nid/search
+      logout: https://192.168.19.71:9443/ecws/service/t2/auth/logout
+---

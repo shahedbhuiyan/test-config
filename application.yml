@@ -1,0 +1,94 @@
+server:
+  port: ${PORT:8080}
+  shutdown: "graceful"
+eureka:
+  instance:
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+    port: ${EUREKA_PORT:8761}
+  client:
+    serviceUrl:
+      defaultZone: http://${EUREKA_HOST}:${eureka.instance.port}/eureka/
+feign:
+  httpclient:
+    max-connections-per-route: 250
+    max-connections: 750
+  client:
+    config:
+      default:
+        connectTimeout: 180000
+        readTimeout: 180000
+idp:
+  url: ${IDP_URL:http://172.16.229.128:8080}
+  #  url: ${IDP_URL:http://172.16.229.236:8080}
+  #  url: ${IDP_URL:http://bs23-dev-one.centralindia.cloudapp.azure.com:8080}
+  auth-url: ${idp.url}/auth
+  token-url: ${idp.url}/auth/realms/${idp.realm}/protocol/openid-connect/token
+  realm: remittance-dev
+logging:
+  file:
+    path: logs
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: "90s"
+  datasource:
+    continue-on-error: true
+    initialization-mode: always
+    url: ${DATABASE_URL}
+    #url: jdbc:postgresql://172.16.229.239:5432/unet_live_db?currentSchema=unet_r_22
+    #username: unet
+    #password: unet@123
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    hikari:
+      maximum-pool-size: 9
+      minimum-idle: 3
+  #      maxLifetime: 600000
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        #default_schema: customer
+        jdbc:
+          time_zone: UTC
+  security:
+    oauth2:
+      client:
+        provider:
+          brain-station-23:
+            user-name-attribute: preferred_username
+            issuer-uri: ${idp.url}/auth/realms/${idp.realm}
+        registration:
+          default:
+            provider: brain-station-23
+            client-id: ${spring.application.name}
+            authorization-grant-type: client_credentials
+            redirectUri: '{baseUrl}/login/oauth2/code/{registrationId}'
+            scope:
+              - openid
+              - profile
+              - email
+      resourceserver:
+        jwt:
+          issuer-uri: ${idp.url}/auth/realms/${idp.realm}
+  zipkin:
+    baseUrl: http://172.16.229.236:9411
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+eureka:
+  instance:
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+  client:
+    serviceUrl:
+      defaultZone: http://${EUREKA_HOST}:${eureka.instance.port}/eureka/
+---

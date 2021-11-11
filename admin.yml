@@ -1,0 +1,26 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          default:
+            client-secret: ${CC_ADMIN}
+abdirect:
+  #  url: http://172.16.229.236:8084/registration/create
+  url: https://192.168.19.166:8080/registration/create
+  username: ${ABDIRECT_USERNAME:abbladmin}
+  password: ${ABDIRECT_PASSWORD:123456}
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+sftp:
+  host: ${SFTP_HOST}
+  port: ${SFTP_PORT}
+  username: ${SFTP_USERNAME}
+  password: ${SFTP_PASSWORD}
+  sessionTimeout: 15000
+  channelTimeout: 15000
+  workingDirectory: /home/sftp/
+---

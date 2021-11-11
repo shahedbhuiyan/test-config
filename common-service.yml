@@ -17,7 +17,7 @@ logging:
 
 spring:
   profiles:
-    active: #spring.profiles.active#
+    active: dev
   application:
     name: common-service
   config:

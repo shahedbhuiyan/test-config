@@ -1,8 +1,0 @@
-spring:
-  security:
-    oauth2:
-      client:
-        registration:
-          default:
-            client-secret: ${CC_DNA}
----

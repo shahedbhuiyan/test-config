@@ -20,4 +20,6 @@ spring:
     active: dev
   application:
     name: common-service
+  config:
+    import: optional:configserver:http://localhost:8888
   

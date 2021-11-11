@@ -2,5 +2,53 @@ server:
   shutdown: "graceful"
   port: 8082
 
+eureka:
+  instance:
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+    port: ${EUREKA_PORT:8761}
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
 
+logging:
+  file:
+    path: logs
 
+spring:
+  profiles:
+    active: #spring.profiles.active#
+  application:
+    name: common-service
+  lifecycle:
+    timeout-per-shutdown-phase: "90s"
+  datasource:
+    url: jdbc:postgresql://172.16.229.239:5432/unet_live_db?currentSchema=unet_r_22
+    username: unet
+    password: unet@123
+    hikari:
+      maximum-pool-size: 9
+      minimum-idle: 3
+
+  jpa:
+    database-platform: org.postgresql.Driver
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  sql:
+    init:
+      mode: always
+      continue-on-error: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          default:
+            client-secret: 374b3299-029f-4a3d-abf9-8f8987ec2eeb

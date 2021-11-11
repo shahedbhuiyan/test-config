@@ -1,6 +1,6 @@
 server:
   shutdown: "graceful"
-  port: 8082
+  port: 8083
 
 eureka:
   instance:
